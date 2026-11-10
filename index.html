@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07152d">
+  <title>EARNOVA — Smart Task & Rewards</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">E</span><span>EARNOVA<small>SMART TASK & REWARDS</small></span></a>
+  <button id="logoutBtn" class="btn btn-outline hidden">Log out</button>
+</header>
+<main class="shell">
+  <section id="authView" class="auth-grid">
+    <div class="hero">
+      <div class="eyebrow">✦ WORK • EARN • REWARD</div>
+      <h1>Make every task<br><span>count.</span></h1>
+      <p>A simple task and rewards platform. Complete verified activities, collect balance, and request a withdrawal when eligible.</p>
+      <div class="hero-stat"><strong>₱3.00</strong><span>per correct reply</span></div>
+      <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+    </div>
+    <div class="auth-card">
+      <div class="tabs"><button class="tab active" data-tab="login">Log in</button><button class="tab" data-tab="register">Create account</button></div>
+      <form id="loginForm" class="form">
+        <h2>Welcome back</h2><p class="muted">Log in to your EARNOVA account.</p>
+        <label>Email address<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Your password"></label>
+        <button class="btn btn-primary full">Log in <span>→</span></button>
+      </form>
+      <form id="registerForm" class="form hidden">
+        <h2>Create your account</h2><p class="muted">An activation code is required.</p>
+        <label>Full name<input name="name" required minlength="2" maxlength="60" placeholder="Your name"></label>
+        <label>Email address<input name="email" type="email" required placeholder="you@example.com"></label>
+        <label>Password<input name="password" type="password" required minlength="8" maxlength="72" placeholder="At least 8 characters"></label>
+        <label>Activation code<input name="activationCode" required placeholder="EAR-XXXXXXXXXX"></label>
+        <label>Referral code <span class="optional">(optional)</span><input name="referralCode" placeholder="Friend's referral code"></label>
+        <button class="btn btn-primary full">Create account <span>→</span></button>
+      </form>
+      <div id="authMessage" class="message" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="appView" class="hidden">
+    <div class="welcome-row"><div><div class="eyebrow">MEMBER DASHBOARD</div><h1>Welcome, <span id="userName">Member</span></h1><p class="muted">Your EARNOVA overview at a glance.</p></div><div class="status-pill"><i></i> Account active</div></div>
+    <div class="stats-grid">
+      <article class="stat-card featured"><span>Wallet balance</span><strong id="balanceBalance">0</strong><small id="pesoBalance">₱0.00 equivalent</small></article>
+      <article class="stat-card"><span>Task reward</span><strong>100 <small>pts</small></strong><small>= ₱3.00</small></article>
+      <article class="stat-card"><span>Your referrals</span><strong id="referralCount">0</strong><small>Successful registrations</small></article>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-page="tasks">Task rooms</button>
+      <button class="nav-tab" data-page="wallet">Wallet</button>
+      <button class="nav-tab" data-page="history">History</button>
+      <button class="nav-tab hidden" id="adminNav" data-page="admin">Admin</button>
+    </nav>
+
+    <section id="page-tasks" class="page">
+      <div class="section-heading"><div><div class="eyebrow">EARN POINTS</div><h2>Choose a task room</h2><p class="muted">Complete the question correctly to earn ₱3.00.</p></div><span class="reward-chip" id="rewardChip">₱3.00 / reply</span></div>
+      <div class="task-grid">
+        <article class="task-card"><div class="task-icon blue-icon">∑</div><h3>Math room</h3><p>Answer a short arithmetic question.</p><span class="tag">QUICK THINKING</span></article>
+        <article class="task-card"><div class="task-icon purple-icon">123</div><h3>Numbers room</h3><p>Find the missing number in a sequence.</p><span class="tag">NUMBER LOGIC</span></article>
+        <article class="task-card"><div class="task-icon gold-icon">Aa</div><h3>Word check room</h3><p>Type the displayed word exactly.</p><span class="tag">ATTENTION</span></article>
+      </div>
+      <div class="task-panel">
+        <div class="task-panel-head"><div><div class="eyebrow">CURRENT CHALLENGE</div><h3 id="taskTitle">Ready for your first task?</h3></div><span class="reward-chip" id="taskReward">₱3.00</span></div>
+        <p id="taskQuestion" class="question">Press “Start task” when you're ready.</p>
+        <form id="answerForm" class="answer-row hidden"><input id="taskAnswer" required autocomplete="off" placeholder="Type your answer"><button class="btn btn-primary">Submit answer</button></form>
+        <button id="startTaskBtn" class="btn btn-primary">Start task <span>→</span></button>
+        <div id="taskMessage" class="message" aria-live="polite"></div>
+        <p class="fine-print">No waiting interval between completed tasks. Each answer is checked by the server. Incorrect or expired answers do not earn balance.</p>
+      </div>
+    </section>
+
+    <section id="page-wallet" class="page hidden">
+      <div class="section-heading"><div><div class="eyebrow">YOUR FUNDS</div><h2>Wallet & withdrawals</h2><p class="muted">Request a payout after reaching the minimum balance.</p></div></div>
+      <div class="wallet-layout">
+        <div class="wallet-card"><span>Wallet balance</span><strong id="walletPoints">₱0.00</strong><b id="walletPeso">Available balance</b><small>₱3.00 per correct reply</small></div>
+        <form id="withdrawForm" class="panel form">
+          <h3>Request withdrawal</h3><p class="muted" id="minimumText">Minimum withdrawal: ₱50.00</p>
+          <label>Amount to withdraw (PHP)<input name="amountPHP" type="number" min="50" step="0.01" required placeholder="50.00"></label>
+          <label>Payment method<select name="method" required><option value="">Choose method</option><option>GCash</option><option>Maya</option></select></label>
+          <label>Account name<input name="accountName" required maxlength="80" placeholder="Name on payment account"></label>
+          <label>GCash/Maya mobile number<input name="accountNumber" required maxlength="40" placeholder="09XXXXXXXXX"></label>
+          <button class="btn btn-primary full">Submit request</button><p class="fine-print">Requests are reviewed manually. Approval does not automatically transfer funds.</p>
+          <div id="withdrawMessage" class="message" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="page-history" class="page hidden">
+      <div class="section-heading"><div><div class="eyebrow">ACCOUNT ACTIVITY</div><h2>Transaction history</h2><p class="muted">Recent wallet credits and debits.</p></div></div>
+      <div class="panel table-wrap"><table><thead><tr><th>Activity</th><th>Amount (PHP)</th><th>Date</th></tr></thead><tbody id="transactionRows"><tr><td colspan="3">No transactions yet.</td></tr></tbody></table></div>
+      <div class="panel referral-panel"><div><div class="eyebrow">INVITE A FRIEND</div><h3>Your referral code</h3><p class="muted">Share this code with a new member.</p></div><div class="copy-row"><code id="referralCode">—</code><button id="copyReferral" class="btn btn-outline">Copy code</button></div><p class="fine-print" id="referralBonusText"></p></div>
+    </section>
+
+    <section id="page-admin" class="page hidden">
+      <div class="section-heading"><div><div class="eyebrow">CONTROL CENTER</div><h2>Admin dashboard</h2><p class="muted">Manage activation codes, members and withdrawal requests.</p></div></div>
+      <div class="admin-grid">
+        <form id="codeForm" class="panel form"><h3>Generate activation codes</h3><label>Number of codes<input name="count" type="number" min="1" max="50" value="1"></label><button class="btn btn-primary full">Generate codes</button><textarea id="generatedCodes" readonly rows="5" placeholder="Generated codes will appear here"></textarea><button type="button" id="copyCodes" class="btn btn-outline full">Copy codes</button></form>
+        <div class="panel"><h3>Platform members</h3><div id="adminUsers" class="admin-list">Loading…</div></div>
+      </div>
+      <div class="panel table-wrap admin-withdrawals"><h3>Withdrawal requests</h3><table><thead><tr><th>Member</th><th>Amount</th><th>Method / Account</th><th>Status</th><th>Review</th></tr></thead><tbody id="adminWithdrawalRows"><tr><td colspan="5">No requests.</td></tr></tbody></table></div>
+    </section>
+  </section>
+  <footer><span>© 2026 EARNOVA</span><span>Built for transparent task rewards</span></footer>
+</main>
+<div id="toast" class="toast" role="status"></div>
+<script src="/app.js"></script>
+</body></html>
